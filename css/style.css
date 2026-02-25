@@ -1,1 +1,286 @@
-css
+/* 基本重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 游戏容器 */
+.game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 游戏画布 */
+#gameCanvas {
+    background-color: #0a0a23;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    cursor: crosshair;
+}
+
+/* 游戏状态显示 */
+.game-status {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.score, .status {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+}
+
+/* 游戏控制按钮 */
+.game-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    padding: 10px 15px;
+    background-color: rgba(0, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover:not(:disabled) {
+    background-color: rgba(0, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 游戏界面 */
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    background-color: rgba(10, 10, 35, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+.overlay-content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #00ffff;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+}
+
+.overlay-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #00ffff;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+}
+
+.overlay-content p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.overlay-btn {
+    padding: 15px 30px;
+    background-color: rgba(0, 255, 255, 0.3);
+    color: #fff;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
+
+.overlay-btn:hover {
+    background-color: rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #gameCanvas {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    .game-status {
+        top: 10px;
+        left: 10px;
+        font-size: 14px;
+    }
+    
+    .game-controls {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .control-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .overlay-content {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    .overlay-content h1 {
+        font-size: 36px;
+    }
+    
+    .overlay-content h2 {
+        font-size: 24px;
+    }
+}
+
+/* 星空背景动画 */
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes slowTwinkle {
+    0%, 100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes fastTwinkle {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* 太空背景 - 深空效果 */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(10, 10, 30, 0.8) 0%, rgba(0, 0, 0, 1) 100%);
+    z-index: -3;
+}
+
+/* 太空背景 - 银河效果 */
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* 银河带 */
+        linear-gradient(45deg, transparent 40%, rgba(50, 100, 150, 0.1) 50%, transparent 60%),
+        linear-gradient(-45deg, transparent 40%, rgba(30, 80, 120, 0.1) 50%, transparent 60%),
+        /* 小星星 */
+        radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 90px 40px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 160px 120px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 20px 160px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 200px 80px, #eee, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 120px 190px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 190px 150px, #fff, rgba(0,0,0,0)),
+        /* 中等星星 */
+        radial-gradient(2px 2px at 50px 150px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 150px 250px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 100px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 350px 200px, #fff, rgba(0,0,0,0)),
+        /* 大星星 */
+        radial-gradient(3px 3px at 100px 200px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 200px 100px, #eee, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 300px 300px, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 400px 400px, 500px 500px, 200px 200px;
+    animation: twinkle 3s infinite;
+    z-index: -2;
+}
+
+/* 太空背景 - 闪烁星星 */
+.game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 10px 20px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 30px 60px, #eee, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 80px 30px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 150px 110px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 10px 150px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 190px 70px, #eee, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 110px 180px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 180px 140px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 140px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 140px 240px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 240px 90px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 340px 190px, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    animation: fastTwinkle 2s infinite;
+    animation-delay: 0.5s;
+    z-index: -1;
+}
